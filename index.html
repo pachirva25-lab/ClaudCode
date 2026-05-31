@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Выборка из Мониторинга — VBA-макрос для формирования Отчета УЗРКС из файлов мониторинга 2021–2026."
+    />
+    <title>Выборка из Мониторинга — Excel/VBA</title>
+    <link rel="stylesheet" href="src/styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <nav class="topbar" aria-label="Основная навигация">
+        <a class="brand" href="#top" aria-label="Выборка мониторинга">
+          <span class="brand__mark">ВМ</span>
+          <span>Выборка из Мониторинга</span>
+        </a>
+        <div class="topbar__links">
+          <a href="#files">Файлы</a>
+          <a href="#logic">Логика</a>
+          <a href="#macro">Макрос</a>
+          <a href="#deliverables">Результат</a>
+        </div>
+      </nav>
+
+      <section id="top" class="hero__content">
+        <p class="eyebrow">Excel / VBA автоматизация</p>
+        <h1>VBA-проект для формирования Отчета УЗРКС</h1>
+        <p class="hero__lead">
+          Проект скорректирован по тексту промпта и ТЗ: макрос выбирает годы, варианты поиска, переносит строки с листа Закупщик в Отчет УЗРКС и ведет журнал ошибок.
+        </p>
+        <div class="hero__actions">
+          <a class="button button--primary" href="#files">Посмотреть состав файлов</a>
+          <a class="button button--secondary" href="#macro">Схема макроса</a>
+        </div>
+      </section>
+    </header>
+
+    <main>
+      <section class="stats" aria-label="Ключевые показатели проекта">
+        <article class="stat-card">
+          <span class="stat-card__value">6</span>
+          <span class="stat-card__label">лет мониторинга</span>
+        </article>
+        <article class="stat-card">
+          <span class="stat-card__value">4</span>
+          <span class="stat-card__label">варианта поиска</span>
+        </article>
+        <article class="stat-card">
+          <span class="stat-card__value">3000</span>
+          <span class="stat-card__label">строк в файле до</span>
+        </article>
+        <article class="stat-card">
+          <span class="stat-card__value">VBA</span>
+          <span class="stat-card__label">целевой формат решения</span>
+        </article>
+      </section>
+
+      <section id="files" class="section">
+        <div class="section__header">
+          <div>
+            <p class="eyebrow">Source files</p>
+            <h2>Файлы и артефакты проекта</h2>
+          </div>
+          <a class="button button--secondary" href="https://github.com/pachirva25-lab/ClaudCode/tree/main/source-files" target="_blank" rel="noreferrer">
+            Открыть на GitHub
+          </a>
+        </div>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>Файл</th>
+                <th>Роль в проекте</th>
+                <th>Статус</th>
+              </tr>
+            </thead>
+            <tbody id="fileRows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="logic" class="section section--split">
+        <div>
+          <p class="eyebrow">Целевая логика</p>
+          <h2>Схема реализованной автоматизации Excel</h2>
+          <p>
+            Решение работает локально: пользователь выбирает годы и критерии, макрос открывает файлы мониторинга только для чтения и переносит найденные строки в итоговый Отчет УЗРКС.
+          </p>
+        </div>
+        <div class="criteria-grid" aria-label="Ключевые блоки решения">
+          <article>
+            <strong>Исходная книга</strong>
+            <span>«Выборка из Мониторинга.xlsm» как место запуска макроса.</span>
+          </article>
+          <article>
+            <strong>Эталон результата</strong>
+            <span>Лист «Отчет УЗРКС» как итоговый результат.</span>
+          </article>
+          <article>
+            <strong>Техническое задание</strong>
+            <span>ТЗ фиксирует 4 варианта поиска и колонки для сопоставления.</span>
+          </article>
+          <article>
+            <strong>Контроль выполнения</strong>
+            <span>Отсутствующие файлы и ошибки структуры пишутся в Logs.</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section__header">
+          <div>
+            <p class="eyebrow">Workbook map</p>
+            <h2>Предлагаемая карта листов и операций</h2>
+          </div>
+        </div>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>Лист / блок</th>
+                <th>Действие</th>
+                <th>Описание</th>
+                <th>Ответственный</th>
+              </tr>
+            </thead>
+            <tbody id="workbookRows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="macro" class="section workflow">
+        <div class="section__header">
+          <div>
+            <p class="eyebrow">VBA macro flow</p>
+            <h2>Алгоритм макроса «СформироватьВыборкуУЗРКС»</h2>
+          </div>
+          <button class="button button--primary" type="button" id="copySpecButton">Скопировать краткое ТЗ</button>
+        </div>
+        <ol class="timeline" id="macroSteps"></ol>
+        <p class="status" id="statusMessage" aria-live="polite"></p>
+      </section>
+
+      <section id="deliverables" class="section">
+        <div class="section__header">
+          <div>
+            <p class="eyebrow">Выполнение промпта</p>
+            <h2>Добавлены первые рабочие артефакты</h2>
+          </div>
+        </div>
+        <ul class="deliverable-list" id="deliverableList"></ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>© 2026 Выборка из Мониторинга</span>
+      <span>VBA-решение по ТЗ для Excel</span>
+    </footer>
+
+    <script type="module" src="src/app.js"></script>
+  </body>
+</html>

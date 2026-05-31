@@ -1,0 +1,11 @@
+{
+  "name": "vyborka-monitoringa",
+  "version": "1.0.0",
+  "description": "Статический веб-проект «Выборка мониторинга» для отбора и анализа объектов мониторинга.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "python3 -m http.server 4173 --bind 127.0.0.1",
+    "check": "node scripts/check.mjs"
+  }
+}
